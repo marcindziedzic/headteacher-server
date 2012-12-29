@@ -21,7 +21,8 @@
   :plugins [[lein-ring "0.7.5"]
             [lein-cljsbuild "0.2.10"]]
 
-  :ring {:handler headteacher.dev-server/handler}
+  :ring {:handler headteacher.dev-server/handler
+         :auto-refresh? true}
 
   :cljsbuild  {
     :source-path "src/clojurescript"
