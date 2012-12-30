@@ -1,2 +1,2 @@
 (ns headteacher.hello)
-(.write js/document "<p>Hello, world!</p>")
+(.write js/document "<p></p>")

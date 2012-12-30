@@ -6,7 +6,8 @@
   [{:keys [main]}]
   [:body] (html/content main))
 
-(html/defsnippet index "views/index.html" [:snippet :> html/any-node] [])
+(html/defsnippet index "views/index.html" [:body :> html/any-node] []
+  )
 
 (defpage "/" []
   (layout {:main (index)}))
