@@ -2,8 +2,11 @@
   (:require [net.cgrand.enlive-html :as html])
   (:use [noir.core :only [defpage]]))
 
-(html/deftemplate index "views/index.html" []
-  )
+(html/deftemplate layout "views/layout.html"
+  [{:keys [main]}]
+  [:body] (html/content main))
+
+(html/defsnippet index "views/index.html" [:snippet :> html/any-node] [])
 
 (defpage "/" []
-  (index))
+  (layout {:main (index)}))
