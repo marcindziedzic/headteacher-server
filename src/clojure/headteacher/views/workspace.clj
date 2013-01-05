@@ -4,12 +4,16 @@
         [headteacher.views.index :only [layout]]))
 
 ; move this logic to other layer
-(def awailable-sheets
+(def available-sheets
   ["24/12/2012" "25/12/2012" "26/12/2012" "27/12/2012"])
 
-(html/defsnippet workspace "views/workspace.html" [:body :> html/any-node] []
-  )
+(html/defsnippet workspace "views/workspace.html" [:body :> html/any-node]
+  [sheets]
+
+  [:option]
+  (html/clone-for [i (-> sheets count range)]
+    (html/set-attr :value (sheets i))))
 
 (defpage "/workspace" []
-  (layout {:main (workspace)}))
+  (layout {:main (workspace available-sheets)}))
 
