@@ -24,11 +24,11 @@
   :ring {:handler headteacher.dev-server/handler
          :auto-refresh? true}
 
-  :cljsbuild  {
-    :source-path "src/clojurescript"
-    :compiler
-    {
-      :output-to "resources/public/js/app.js"
-      :optimizations :simple
-      :pretty-print true
-      }})
+  :cljsbuild
+  {:builds
+   [{:source-path "src/clojurescript",
+     :compiler
+     {:pretty-print true,
+      :output-to "resources/public/js/app.js",
+      :optimizations :simple}}]}
+  )
