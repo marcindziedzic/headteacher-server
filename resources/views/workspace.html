@@ -4,9 +4,15 @@
     <title>Personal Workspace</title>
 </head>
 <body>
-    <input type="text" list="available-sheets" placeholder="Select your sheet" />
+    <input id="select-sheet" type="text" list="available-sheets" placeholder="Select your sheet" />
     <datalist id="available-sheets">
         <option value="01/01/2013"></option>
     </datalist>
+
+    <input id="btn" type="button" value="Click me" onclick="headteacher.workspace.load_sheet()"/>
+
+    <div id="loaded-sheet" style="visibility: hidden">
+        <p></p>
+    </div>
 </body>
 </html>

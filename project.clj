@@ -8,7 +8,9 @@
 				 [ibdknox/clojurescript "0.0-1534"]
 				 [noir "1.3.0-beta10"]
 				 [enlive "1.0.1"]
-				 [domina "1.0.1"]]
+         [enfocus "1.0.0-beta2"]
+         [domina "1.0.1"]
+         [fetch "0.1.0-alpha2"]]
   :source-paths ["src/clojure"]
   :resource-paths ["resources"]
   :compile-path "target/classes"
@@ -23,7 +25,7 @@
             [lein-cljsbuild "0.2.10"]]
 
   :ring {:handler headteacher.server/handler
-         :auto-refresh? true}
+         :auto-refresh? false}
 
   :profiles {
               :dev { :test-paths ["test/clojure"]

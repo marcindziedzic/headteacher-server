@@ -1,16 +1,15 @@
 (ns headteacher.api.sheets
-  (:use [noir.core :only [defpage]]
-        [noir.response :only [json]]))
+  (:use [noir.fetch.remotes :only [defremote]]))
 
 (def animals
-  {:id 1
+  {:id "24/12/2012"
    :words {
           "dog" "pies"
           "cat" "kot"
           "canary" "kanarek"}})
 
 (def feelings
-  {:id 2
+  {:id "25/12/2012"
    :words {
           "anxious" "zaniepokojony"
           "annoyed" "rozdrażniony"
@@ -20,5 +19,5 @@
 (def sheets
   [animals feelings])
 
-(defpage "/api/sheets" []
-  (json sheets))
+(defremote get-sheet [id]
+  (first (filter #(= (:id %) id) sheets)))
