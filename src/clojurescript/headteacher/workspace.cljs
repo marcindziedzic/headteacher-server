@@ -14,7 +14,11 @@
   ["#loaded-sheet p:first-child"] (em/content "")
   ["#loaded-sheet p:not(:first-child)"] (em/substitute ""))
 
+(defn get-sheet-name []
+  (em/from (em/select ["#select-sheet"]) (em/get-prop :value)))
+
 (defn ^:export load-sheet []
-  (fm/remote (get-sheet "24/12/2012") [result]
+  (fm/remote (get-sheet (get-sheet-name)) [result]
     (remove-sheet)
-    (insert-sheet result)))
+    (when result
+      (insert-sheet result))))
