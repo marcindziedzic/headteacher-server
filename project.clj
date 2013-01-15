@@ -10,11 +10,10 @@
 				 [enlive "1.0.1"]
          [enfocus "1.0.0-beta2"]
          [domina "1.0.1"]
-         [fetch "0.1.0-alpha2"]]
+         [fetch "0.1.0-alpha2"]
+         [com.taoensso/carmine "1.2.1"]]
   :source-paths ["src/clojure"]
   :resource-paths ["resources"]
-  :compile-path "target/classes"
-  :target-path "target/"
   :jar-name "headteacher-server.jar"
   :uberjar-name "headteacher-server-standalone.jar"
   :javac-options ["-target" "1.7" "-source" "1.7" "-Xlint:-options"]

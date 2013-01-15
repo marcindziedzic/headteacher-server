@@ -1,2 +1,3 @@
 web: lein ring server $PORT
 cljsbuild: lein cljsbuild auto
+redis: redis-server
