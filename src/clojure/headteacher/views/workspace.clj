@@ -1,10 +1,8 @@
 (ns headteacher.views.workspace
   (:require [net.cgrand.enlive-html :as html])
   (:use [noir.core :only [defpage]]
-        [headteacher.views.index :only [layout]]))
-
-(def available-sheets
-  ["24/12/2012" "25/12/2012" "26/12/2012" "27/12/2012" "28/12/2012"])
+        [headteacher.views.index :only [layout]]
+        [headteacher.datastore :only [get-sheets user]]))
 
 (html/defsnippet workspace "views/workspace.html" [:body :> html/any-node]
   [sheets]
@@ -14,5 +12,4 @@
     (html/set-attr :value s)))
 
 (defpage "/workspace" []
-  (layout {:main (workspace available-sheets)}))
-
+  (layout {:main (workspace (get-sheets user))}))
