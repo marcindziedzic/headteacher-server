@@ -2,7 +2,7 @@
   (:require [net.cgrand.enlive-html :as html])
   (:use [noir.core :only [defpage]]
         [headteacher.views.index :only [layout]]
-        [headteacher.datastore :only [get-sheets populate user]]))
+        [headteacher.datastore :only [get-sheets user]]))
 
 (html/defsnippet workspace "views/workspace.html" [:body :> html/any-node]
   [sheets]
@@ -13,7 +13,3 @@
 
 (defpage "/workspace" []
   (layout {:main (workspace (get-sheets user))}))
-
-(defpage "/populate" []
-  (populate)
-  "OK")

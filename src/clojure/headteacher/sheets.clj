@@ -8,4 +8,8 @@
   (let [f  (partial extract-word query)
         w1 (f #"[#][\w+ ]+")
         w2 (f #"[@][\w+ ]+")]
-    (when (and w1 w2) {w1 w2})))
+    (when (and w1 w2) [w1 w2])))
+
+(defn add-word [sheet word]
+  (when sheet
+    (update-in sheet [:words] conj word)))
