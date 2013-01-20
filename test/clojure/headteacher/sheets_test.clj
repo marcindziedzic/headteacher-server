@@ -28,4 +28,8 @@
   (is (= nil (add-word nil ["canary" "kanarek"])))
   (is (= nil (add-word nil nil))))
 
+(deftest should-define-valid-sheet-template
+  (is (contains? sheet-template :words))
+  (is (map? (sheet-template :words))))
+
 (run-tests)

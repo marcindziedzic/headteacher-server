@@ -3,8 +3,11 @@
             [headteacher.sheets :as s])
   (:use [noir.fetch.remotes :only [defremote]]))
 
-(defremote get-sheet [id]
-  (d/get-sheet id))
+(defremote get-or-create-sheet [id]
+  (let [sheet (d/get-sheet id)]
+    (if-not sheet
+      (d/create-sheet d/user id s/sheet-template)
+      sheet)))
 
 (defremote add-word [id query]
   (let [sheet (d/get-sheet id)

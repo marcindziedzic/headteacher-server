@@ -1,5 +1,8 @@
 (ns headteacher.sheets)
 
+(def sheet-template
+  {:words {}})
+
 (defn- extract-word [query regex]
   (when-let [word (re-find regex query)]
     (clojure.string/replace word #"#|@| *$" "")))
