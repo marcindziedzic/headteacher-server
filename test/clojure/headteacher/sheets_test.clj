@@ -1,6 +1,6 @@
 (ns headteacher.sheets-test
   (:use [headteacher.sheets]
-        [clojure.test :only [deftest run-tests is]]))
+        [clojure.test :only [deftest run-tests is are]]))
 
 (def sheet
   { :created "today"
@@ -12,21 +12,24 @@
             "canary" "kanarek"}})
 
 (deftest should-parse-query-string
-  (is (= ["dog" "pies"] (parse-query-string "#dog @pies")))
-  (is (= ["dog" "pies"] (parse-query-string "@pies #dog")))
-  (is (= ["dog" "pies"] (parse-query-string "@pies#dog")))
-  (is (= ["home market" "rynek krajowy"] (parse-query-string "#home market @rynek krajowy")))
-  (is (= ["home market" "rynek krajowy"] (parse-query-string "  @rynek krajowy  #home market  ")))
-  (is (= nil (parse-query-string "@pies")))
-  (is (= nil (parse-query-string "#dog")))
-  (is (= nil (parse-query-string ""))))
+  (are [qs result] (= result (parse-query-string qs))
+    "#dog @pies"                        ["dog" "pies"]
+    "@pies #dog"                        ["dog" "pies"]
+    "@pies#dog"                         ["dog" "pies"]
+    "#home market @rynek krajowy"       ["home market" "rynek krajowy"]
+    "  @rynek krajowy  #home market  "  ["home market" "rynek krajowy"]
+    "@pies"                             nil
+    "#dog"                              nil
+    ""                                  nil)
+  )
 
 (deftest should-add-word-to-sheet
-  (is (= updated-sheet (add-word sheet ["canary" "kanarek"])))
-  (is (= sheet (add-word sheet ["dog" "pies"])))
-  (is (= sheet (add-word sheet nil)))
-  (is (= nil (add-word nil ["canary" "kanarek"])))
-  (is (= nil (add-word nil nil))))
+  (are [word sheet result] (= result (add-word sheet word))
+    ["canary" "kanarek"] sheet updated-sheet
+    ["dog" "pies"]       sheet sheet
+    nil                  sheet sheet
+    ["canary" "kanarek"] nil   nil
+    nil                  nil   nil))
 
 (deftest should-define-valid-sheet-template
   (is (contains? sheet-template :words))
