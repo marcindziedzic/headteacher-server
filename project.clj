@@ -26,8 +26,13 @@
   :ring {:handler headteacher.server/handler
          :auto-refresh? false}
 
+  :test-selectors {:default (fn [m] (not (or (:integration m) (:system m))))
+                   :integration :integration
+                   :system :system}
+
   :profiles {
               :dev { :test-paths ["test/clojure"]
+                     :dependencies [[clj-webdriver "0.6.0-beta2"]]
                      :cljsbuild
                      {:builds
                       [{:source-path "src/clojurescript",

@@ -32,5 +32,9 @@
   (set-sheets username id)
   (set-sheet id sheet))
 
-; temporary user, until authorization is implemented TODO move it to view
+(defn clear []
+  (with-conn
+    (redis/flushall)))
+
+; temporary user, until authorization is implemented
 (def user "anonymous")

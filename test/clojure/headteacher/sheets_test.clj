@@ -1,6 +1,6 @@
 (ns headteacher.sheets-test
   (:use [headteacher.sheets]
-        [clojure.test :only [deftest run-tests is are]]))
+        [clojure.test :only [deftest is are]]))
 
 (def sheet
   { :created "today"
@@ -34,5 +34,3 @@
 (deftest should-define-valid-sheet-template
   (is (contains? sheet-template :words))
   (is (map? (sheet-template :words))))
-
-(run-tests)
