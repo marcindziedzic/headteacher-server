@@ -1,12 +1,9 @@
 (ns headteacher.views.index
-  (:require [net.cgrand.enlive-html :as html])
-  (:use [noir.core :only [defpage]]))
+  (:use [headteacher.views.layout :only [layout]]
+        [noir.core :only [defpage]]
+        [net.cgrand.enlive-html :only [defsnippet any-node]]))
 
-(html/deftemplate layout "views/layout.html"
-  [{:keys [main]}]
-  [:body] (html/content main))
-
-(html/defsnippet index "views/index.html" [:body :> html/any-node] []
+(defsnippet index "views/index.html" [:body :> any-node] []
   )
 
 (defpage "/" []

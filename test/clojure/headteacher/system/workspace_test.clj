@@ -38,7 +38,7 @@
 
 (defn setup [f]
   (headteacher.datastore/clear)
-  (set-driver! {:browser :firefox} "http://localhost:4000/workspace")
+  (set-driver! {:browser :firefox} "http://localhost:5000/workspace")
   (f)
   (quit))
 

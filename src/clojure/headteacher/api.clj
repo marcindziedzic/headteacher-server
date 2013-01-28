@@ -1,4 +1,4 @@
-(ns headteacher.api.sheets
+(ns headteacher.api
   (:require [headteacher.datastore :as d]
             [headteacher.sheets :as s])
   (:use [noir.fetch.remotes :only [defremote]]))
