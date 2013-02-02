@@ -32,7 +32,11 @@
 
   :profiles {
               :dev { :test-paths ["test/clojure"]
-                     :dependencies [[clj-webdriver "0.6.0-beta2"]]
+                     :dependencies [[clj-webdriver "0.6.0-beta2"]
+									[expectations "1.4.24"]
+									[junit "4.8.1"]]
+					 :plugins [[lein-autoexpect "0.2.5"]
+							   [lein-expectations "0.0.7"]]
                      :cljsbuild
                      {:builds
                       [{:source-path "src/clojurescript",
