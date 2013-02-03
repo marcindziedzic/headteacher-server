@@ -1,13 +1,28 @@
 (ns headteacher.server
-  (:require [noir.server :as server]))
+  (:use [compojure.core :exclude [routes]]
+        [compojure.route :only [resources not-found]]
+        [ring.middleware.params :only [wrap-params]]
+        [ring.adapter.jetty :only [run-jetty]])
+  (:require [headteacher.views.index]
+            [headteacher.views.workspace]
+            [headteacher.api]))
 
-(server/load-views-ns 'headteacher
-                      'headteacher.views)
+(defroutes routes
+  (GET "/" [] (headteacher.views.index/page))
+  (GET "/workspace" [] (headteacher.views.workspace/page))
 
-(def handler (server/gen-handler {:mode :dev
-                                  :ns 'noir-example}))
+  (ANY "/api/sheet/:id" [] headteacher.api/sheet)
+  (ANY "/api/sheet/:id/word" [] headteacher.api/word)
+
+  (resources "/")
+  (not-found "Page not found"))
+
+(def handler
+  (wrap-params routes))
+
+; move method to config
+(defn get-port []
+  (Integer/parseInt (or (System/getenv "PORT") "8080")))
 
 (defn -main []
-  (server/start
-    (Integer/parseInt
-      (or (System/getenv "PORT") "8080"))))
+  (run-jetty handler {:port (get-port)}))

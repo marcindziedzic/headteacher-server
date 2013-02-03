@@ -1,4 +1,5 @@
-(ns headteacher.sheets)
+(ns headteacher.sheets
+  (:require [headteacher.datastore :as d]))
 
 (def sheet-template
   {:words {}})
@@ -16,3 +17,20 @@
 (defn add-word [sheet word]
   (when sheet
     (update-in sheet [:words] conj word)))
+
+; not covered yet with tests, should be simplified
+
+(defn get-or-create-sheet [id]
+  (let [sheet (d/get-sheet id)]
+    (if-not sheet
+      (d/create-sheet d/user id sheet-template)
+      sheet)))
+
+(defn update-sheet [id query]
+  (let [sheet (d/get-sheet id)
+        word (parse-query-string query)]
+    (when sheet
+      (->>
+        (add-word sheet word)
+        (d/set-sheet id))
+      word)))

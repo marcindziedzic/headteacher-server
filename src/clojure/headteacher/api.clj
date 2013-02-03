@@ -1,19 +1,17 @@
 (ns headteacher.api
-  (:require [headteacher.datastore :as d]
-            [headteacher.sheets :as s])
-  (:use [noir.fetch.remotes :only [defremote]]))
+  (:require [headteacher.sheets :as s]
+            [cheshire.core :as json])
+  (:use [liberator.core :only [defresource request-method-in]]))
 
-(defremote get-or-create-sheet [id]
-  (let [sheet (d/get-sheet id)]
-    (if-not sheet
-      (d/create-sheet d/user id s/sheet-template)
-      sheet)))
+(defn params [ctx name]
+  (-> ctx :request :params (get name)))
 
-(defremote add-word [id query]
-  (let [sheet (d/get-sheet id)
-        word (s/parse-query-string query)]
-    (when sheet
-      (->>
-        (s/add-word sheet word)
-        (d/set-sheet id))
-      word)))
+(defresource sheet
+  :available-media-types ["application/json"]
+  :handle-ok #(json/generate-string
+                (s/get-or-create-sheet (params % :id))))
+
+(defresource word
+  :available-media-types ["application/json"]
+  :method-allowed? (request-method-in :put)
+  :put! #(s/update-sheet (params % :id) (params % "w")))

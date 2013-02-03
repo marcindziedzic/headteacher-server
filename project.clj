@@ -6,11 +6,14 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.4.0"]
 				 [ibdknox/clojurescript "0.0-1534"]
-				 [noir "1.3.0-beta10"]
+         [ring "1.1.8"]
+	       [ring/ring-json "0.1.2"] ; replace with library really used
+         [compojure "1.1.5"]
 				 [enlive "1.0.1"]
          [enfocus "1.0.0-beta2"]
          [domina "1.0.1"]
-         [fetch "0.1.0-alpha2"]
+         [fetch "0.1.0-alpha2"] ; replace with clojurescript ajax
+         [liberator "0.8.0"]
          [com.taoensso/carmine "1.2.1"]]
   :source-paths ["src/clojure"]
   :resource-paths ["resources"]
@@ -33,10 +36,10 @@
   :profiles {
               :dev { :test-paths ["test/clojure"]
                      :dependencies [[clj-webdriver "0.6.0-beta2"]
-									[expectations "1.4.24"]
-									[junit "4.8.1"]]
+                                    [expectations "1.4.24"]
+                                    [junit "4.8.1"]]
 					 :plugins [[lein-autoexpect "0.2.5"]
-							   [lein-expectations "0.0.7"]]
+							       [lein-expectations "0.0.7"]]
                      :cljsbuild
                      {:builds
                       [{:source-path "src/clojurescript",

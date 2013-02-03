@@ -1,6 +1,7 @@
 (ns headteacher.workspace
   (:require [enfocus.core :as ef]
-            [fetch.remotes :as remotes])
+            [fetch.remotes :as remotes]
+            [goog.net.XhrIo :as xhr])
   (:require-macros [enfocus.macros :as em]
                    [fetch.macros :as fm]))
 
@@ -45,14 +46,36 @@
 (defn get-query []
   (get-value "#query"))
 
+; AJAX
+
+;(defn receiver [event]
+;  (let [response (.-target event)]
+;    (.write js/document (.getResponseText response))))
+
+(defn receiver [event]
+  (let [response (.-target event)]
+    (.write js/alert (.getResponseText response))))
+
+(defn post [url content]
+  (xhr/send url receiver "POST" content))
+
+(defn get-or-create-sheet [name]
+  (xhr/send (str "/api/sheet/" name) receiver "GET"))
+
 ; PUBLIC API
 
 (defn ^:export load-sheet []
-  (fm/remote (get-or-create-sheet (get-selected-sheet-name)) [result]
+  (let [result (get-or-create-sheet (get-selected-sheet-name))]
     (clear-sheet-content)
     (insert-sheet-name (get-selected-sheet-name))
     (when-let [words (seq (:words result))]
       (insert-sheet-content words))))
+
+;  (fm/remote (get-or-create-sheet (get-selected-sheet-name)) [result]
+;    (clear-sheet-content)
+;    (insert-sheet-name (get-selected-sheet-name))
+;    (when-let [words (seq (:words result))]
+;      (insert-sheet-content words))))
 
 (defn ^:export submit-query []
   (fm/remote (add-word (get-open-sheet-name) (get-query)) [result]
